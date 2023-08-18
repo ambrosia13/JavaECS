@@ -50,7 +50,7 @@ public class Query {
 
 		var filtered = components
 			.filter(component -> component.getClass().equals(type));
-
+		
 		return (Stream<T>) filtered;
 	}
 

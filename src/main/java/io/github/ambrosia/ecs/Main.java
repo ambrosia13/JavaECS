@@ -1,5 +1,7 @@
 package io.github.ambrosia.ecs;
 
+import io.github.ambrosia.ecs.query.None;
+import io.github.ambrosia.ecs.query.Predicate;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 
@@ -41,5 +43,7 @@ public class Main {
 
 		ecs.query().components(Defense.class)
 			.forEach(defense -> System.out.println("An entity has " + defense.defense + " defense"));
+		
+		Predicate<> predicate = new None<>();
 	}
 }
