@@ -1,6 +1,7 @@
 package io.github.ambrosia.util;
 
 public class PerformanceProfiler {
+	static boolean active = false;
 	static long elapsed = 0;
 
 	public static void start() {
@@ -19,6 +20,10 @@ public class PerformanceProfiler {
 		start();
 		runnable.run();
 		end();
-		System.out.println(getMillis());
+		if(active) System.out.println(getMillis());
+	}
+
+	public static void setActive(boolean b) {
+		active = b;
 	}
 }
