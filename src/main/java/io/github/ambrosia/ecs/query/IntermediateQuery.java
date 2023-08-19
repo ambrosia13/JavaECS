@@ -83,7 +83,11 @@ public class IntermediateQuery<T extends Component> {
 		});
 
 		boolean containsTarget = targetMatches.stream().anyMatch(b -> b);
+
+		// Note that the logic here assumes that there is only one of each component type per entity,
+		// which is expected in ECS design.
 		boolean containsWith = withMatches.stream().mapToInt(b -> b ? 1 : 0).sum() >= this.with.size() || this.with.isEmpty();
+
 		boolean containsWithout = withoutMatches.stream().anyMatch(b -> b) && !this.without.isEmpty();
 
 		return  containsTarget && containsWith && !containsWithout;

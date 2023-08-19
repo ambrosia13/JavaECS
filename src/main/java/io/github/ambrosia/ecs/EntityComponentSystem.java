@@ -8,17 +8,19 @@ import java.util.Arrays;
 public class EntityComponentSystem {
 	public record AttachedComponent(Component component, int index) {}
 
+	private final Resources resources;
+	private final Systems systems;
 	private final Entities entities;
 
 	// ArrayList might not be the best data structure for this
 	private final ArrayList<AttachedComponent> components;
 
-	private final ArrayList<EcsSystem> systems;
 
 	public EntityComponentSystem() {
 		this.entities = new Entities();
 		this.components = new ArrayList<>();
-		this.systems = new ArrayList<>();
+		this.systems = new Systems(this);
+		this.resources = new Resources();
 	}
 
 	/**
@@ -28,14 +30,12 @@ public class EntityComponentSystem {
 		return new Query(this.components, this.entities);
 	}
 
-	public EntityComponentSystem addSystem(EcsSystem system) {
-		this.systems.add(system);
-		return this;
+	public Systems systems() {
+		return this.systems;
 	}
 
-	// TEMPORARY: just for testing.
-	public void runSystems() {
-		this.systems.forEach(system -> system.run(this));
+	public Resources resources() {
+		return this.resources;
 	}
 
 	/**
