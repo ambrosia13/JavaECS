@@ -33,6 +33,11 @@ public class EntityComponentSystem {
 		return this;
 	}
 
+	// TEMPORARY: just for testing.
+	public void runSystems() {
+		this.systems.forEach(system -> system.run(this));
+	}
+
 	/**
 	 * Spawns an entity with the specified components.
 	 * @param components the components to add

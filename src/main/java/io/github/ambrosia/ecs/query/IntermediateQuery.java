@@ -18,19 +18,15 @@ public class IntermediateQuery<T extends Component> {
 	ArrayList<Class<? extends Component>> without;
 	boolean requireAllPredicates;
 
-	IntermediateQuery(Query query) {
+	IntermediateQuery(Query query, Class<T> type) {
+		this.target = type;
+
 		this.query = query;
 
 		this.with = new ArrayList<>();
 		this.without = new ArrayList<>();
 
 		this.requireAllPredicates = true;
-	}
-
-	@SuppressWarnings("unchecked")
-	public <U extends Component> IntermediateQuery<T> component(Class<U> componentClass) {
-		this.target = (Class<T>) componentClass;
-		return this;
 	}
 
 	@SafeVarargs
@@ -115,7 +111,7 @@ public class IntermediateQuery<T extends Component> {
 	public Stream<T> build() {
 		var entityComponents = objectifyComponents();
 
-		return entityComponents.stream()
+		return (Stream<T>) entityComponents.stream()
 			.filter(this::resolveQueries)
 			.map(this::getTargetComponentFromEntity);
 

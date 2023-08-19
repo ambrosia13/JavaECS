@@ -14,8 +14,8 @@ public class Query {
 	List<EntityComponentSystem.AttachedComponent> components;
 	Entities entities;
 
-	public <T extends Component> IntermediateQuery<T> start() {
-		return new IntermediateQuery<>(this);
+	public <T extends Component> IntermediateQuery<T> of(Class<T> type) {
+		return new IntermediateQuery<>(this, type);
 	}
 
 	@SuppressWarnings("unchecked")

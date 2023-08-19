@@ -40,12 +40,16 @@ public class Main {
 			.spawn(new Name("Help"), new Health(160), new Defense(10))
 			.spawn(new Name("Smartie Pants"), new Health(30), new Defense(10), new Intelligence(140));
 
-		ecs.query().start()
-			.component(Name.class) // the component we want to operate on
-			.with(Health.class, Defense.class) // the selected entity must have this component
-			//.without() // the selected entity can't have this component
-			.requireAllPredicates(true) // defaults to true, so not really needed.
-			.build() // gives a stream of components that match the search
-			.forEach(System.out::println);
+		// TODO: add system schedules
+		ecs.addSystem(Main::mySystem);
+
+		ecs.runSystems();
+	}
+
+	static void mySystem(EntityComponentSystem ecs) {
+		ecs.query().of(Name.class)
+			.with(Health.class)
+			.build()
+			.forEach(name -> System.out.println(name.name + " is very healthy!"));
 	}
 }
