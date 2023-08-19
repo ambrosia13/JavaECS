@@ -15,8 +15,9 @@ public class Systems {
 		systems = List.of(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 	}
 
-	public void add(Schedule schedule, EcsSystem... systems) {
+	public Systems add(Schedule schedule, EcsSystem... systems) {
 		this.systems.get(schedule.index).addAll(List.of(systems));
+		return this;
 	}
 
 	public void runStartupSystems() {

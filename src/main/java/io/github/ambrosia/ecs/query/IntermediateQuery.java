@@ -113,12 +113,12 @@ public class IntermediateQuery<T extends Component> {
 	public Stream<T> build() {
 		var entityComponents = objectifyComponents();
 
-		return (Stream<T>) entityComponents.stream()
+		return entityComponents.stream()
 			.filter(this::resolveQueries)
 			.map(this::getTargetComponentFromEntity);
+	}
 
-//		return (Stream<T>) components.stream()
-//			.map(EntityComponentSystem.AttachedComponent::component)
-//			.filter(component -> component.getClass().equals(target));
+	public ArrayList<ArrayList<Component>> getEntities() {
+		return this.objectifyComponents();
 	}
 }

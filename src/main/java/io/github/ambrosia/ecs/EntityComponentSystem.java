@@ -11,6 +11,7 @@ public class EntityComponentSystem {
 	private final Resources resources;
 	private final Systems systems;
 	private final Entities entities;
+	private final Query query;
 
 	// ArrayList might not be the best data structure for this
 	private final ArrayList<AttachedComponent> components;
@@ -21,13 +22,14 @@ public class EntityComponentSystem {
 		this.components = new ArrayList<>();
 		this.systems = new Systems(this);
 		this.resources = new Resources();
+		this.query = new Query(this.components, this.entities);
 	}
 
 	/**
 	 * Returns an object that is able to query many things about the ECS, like its components.
 	 */
 	public Query query() {
-		return new Query(this.components, this.entities);
+		return this.query;
 	}
 
 	public Systems systems() {
