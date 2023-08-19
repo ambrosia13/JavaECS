@@ -22,6 +22,12 @@ public class Main {
 		public String name;
 	}
 
+	@AllArgsConstructor
+	@ToString
+	static class Intelligence implements Component {
+		public int value;
+	}
+
 	public static void main(String[] args) {
 		var ecs = new EntityComponentSystem();
 
@@ -29,12 +35,15 @@ public class Main {
 			.spawn(new Health(100), new Name("Sophia"), new Defense(40))
 			.spawn(new Health(100), new Name("Bimerton"))
 			.spawn(new Name("Joe Biden"), new Defense(10))
-			.spawn(new Name("Geraldine"));
+			.spawn(new Name("Geraldine"))
+			.spawn(new Health(600))
+			.spawn(new Name("Help"), new Health(160), new Defense(10))
+			.spawn(new Name("Smartie Pants"), new Health(30), new Defense(10), new Intelligence(140));
 
 		ecs.query().start()
 			.component(Name.class) // the component we want to operate on
-			.with(Health.class) // the selected entity must have this component
-			.without(Defense.class) // the selected entity can't have this component
+			.with(Health.class, Defense.class) // the selected entity must have this component
+			//.without() // the selected entity can't have this component
 			.requireAllPredicates(true) // defaults to true, so not really needed.
 			.build() // gives a stream of components that match the search
 			.forEach(System.out::println);
