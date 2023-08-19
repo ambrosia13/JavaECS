@@ -1,11 +1,9 @@
 package io.github.ambrosia.ecs.query;
 
 import io.github.ambrosia.ecs.Component;
-import io.github.ambrosia.ecs.EntityComponentSystem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
