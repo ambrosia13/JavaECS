@@ -1,18 +1,19 @@
 package io.github.ambrosia.ecs;
 
+import io.github.ambrosia.ecs.query.Query;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Stream;
 
-public class ECS {
-	record AttachedComponent(Component component, int index) {}
+public class EntityComponentSystem {
+	public record AttachedComponent(Component component, int index) {}
 
 	private final Entities entities;
 
 	// ArrayList might not be the best data structure for this
 	private final ArrayList<AttachedComponent> components;
 
-	public ECS() {
+	public EntityComponentSystem() {
 		this.entities = new Entities();
 		this.components = new ArrayList<>();
 	}
@@ -30,14 +31,14 @@ public class ECS {
 	 */
 	// TODO: Because of how entities are added, components are always grouped by entity rather than type (so no locality).
 	// This doesn't provide much of an advantage performance-wise over OOP. I'll need to rethink this approach soon.
-	public ECS spawn(Component... components) {
+	public EntityComponentSystem spawn(Component... components) {
 		// Create a new entity...
 		int entityIndex = this.entities.create();
 
 		// ...and attach the components to that entity.
 		Arrays.stream(components)
 			.forEach(component -> {
-				this.components.add(new ECS.AttachedComponent(component, entityIndex));
+				this.components.add(new EntityComponentSystem.AttachedComponent(component, entityIndex));
 			});
 
 		return this;

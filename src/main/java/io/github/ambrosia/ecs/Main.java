@@ -1,7 +1,5 @@
 package io.github.ambrosia.ecs;
 
-import io.github.ambrosia.ecs.query.None;
-import io.github.ambrosia.ecs.query.Predicate;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 
@@ -25,7 +23,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		var ecs = new ECS();
+		var ecs = new EntityComponentSystem();
 
 		ecs
 			.spawn(new Health(100), new Name("Sophia"), new Defense(40))
@@ -33,17 +31,12 @@ public class Main {
 			.spawn(new Name("Joe Biden"), new Defense(10))
 			.spawn(new Name("Geraldine"));
 
-		// query every entity with a name
-		ecs.query().components(Name.class)
-			.forEach(name -> System.out.println(name.name + " says hello!"));
-
-		// now, query every entity with a name, but only those who also have health
-		ecs.query().componentsWith(Health.class, Name.class)
-			.forEach(name -> System.out.println(name.name + " has health!"));
-
-		ecs.query().components(Defense.class)
-			.forEach(defense -> System.out.println("An entity has " + defense.defense + " defense"));
-		
-		Predicate<> predicate = new None<>();
+		ecs.query().start()
+			.component(Name.class) // the component we want to operate on
+			.with(Health.class) // the selected entity must have this component
+			.without(Defense.class) // the selected entity can't have this component
+			.requireAllPredicates(true) // defaults to true, so not really needed.
+			.build() // gives a stream of components that match the search
+			.forEach(System.out::println);
 	}
 }
