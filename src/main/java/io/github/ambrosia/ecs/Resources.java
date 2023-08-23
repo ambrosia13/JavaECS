@@ -10,8 +10,7 @@ public class Resources {
 	}
 
 	public <T extends Resource> Resources init(ResourceInitializer<T> initializer) {
-		this.add(initializer.init());
-		return this;
+		return this.add(initializer.init());
 	}
 
 	public Resources add(Resource resource) {

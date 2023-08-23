@@ -12,8 +12,10 @@ public class EntityComponentSystem {
 	private final Systems systems;
 	private final Entities entities;
 	private final Query query;
+	private final Events events;
 
 	// ArrayList might not be the best data structure for this
+	// TODO: maybe a HashMap keyed with component type, with values of lists of components?
 	private final ArrayList<AttachedComponent> components;
 
 
@@ -23,6 +25,7 @@ public class EntityComponentSystem {
 		this.systems = new Systems(this);
 		this.resources = new Resources();
 		this.query = new Query(this.components, this.entities);
+		this.events = new Events();
 	}
 
 	/**
@@ -38,6 +41,10 @@ public class EntityComponentSystem {
 
 	public Resources resources() {
 		return this.resources;
+	}
+	
+	public Events events() {
+		return this.events;
 	}
 
 	/**
